@@ -4,7 +4,7 @@ import axios from "axios";
 const urlApi = "http://localhost:8080/api/danes/"
 
 // Obtenemos todos los danes
-export const getDanes = async (urlApi) => {
+export const getDanes = async () => {
   try{
     const res = await axios.get(urlApi);
     return res.data;
@@ -15,7 +15,7 @@ export const getDanes = async (urlApi) => {
 };
 
 // Obtenemos un dan por ID
-export const getDanById = async (urlApi, id) => {
+export const getDanById = async (id) => {
   try{
     const res = await axios.get(urlApi + id);
     return res.data;
@@ -24,7 +24,7 @@ export const getDanById = async (urlApi, id) => {
   }
 };
 // Obtenemos un dan por DNI
-export const getDanByDni = async (urlApi, dni) => {
+export const getDanByDni = async (dni) => {
   try{
     const res = await axios.get(urlApi + "dni/" + dni);
     return res.data;
@@ -34,7 +34,7 @@ export const getDanByDni = async (urlApi, dni) => {
 };
 
 // Creamos un dan
-export const createDan = async (urlApi, dan) => {
+export const createDan = async (dan) => {
   try{
     const res = await axios.post(urlApi, dan);
     return res.data;
@@ -45,9 +45,9 @@ export const createDan = async (urlApi, dan) => {
 };
 
 // Actualizamos un dan
-export const updateDan = async (urlApi, id, dan) => {
+export const updateDan = async (id, dan) => {
   try{
-    const res = await axios.put(urlApi, id, dan);
+    const res = await axios.put(urlApi + id, dan);
     return res.data;
   } catch(err){
     return{
@@ -59,7 +59,7 @@ export const updateDan = async (urlApi, id, dan) => {
 // Borramos un dan
 export const deleteDan = async (id) =>{
   try{
-    const res = await axios.delete(urlApi, id);
+    const res = await axios.delete(urlApi + id);
     return res.data;
   } catch(err){
     return {
