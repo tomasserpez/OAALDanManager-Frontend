@@ -60,10 +60,6 @@ const DanList = () => {
       accessor: 'Nacionalidad',
     },
     {
-      Header: 'Observación',
-      accessor: 'Observacion',
-    },
-    {
       Header: 'Tipo de Alumno',
       accessor: 'TipoDeAlumno',
     },
@@ -145,6 +141,7 @@ return (
                       'Nacionalidad',
                       'Observacion',
                       'TipoDeAlumno',
+                      'Acciones',
                     ].includes(cell.column.id)
                   ) {
                     return null; // Ocultar las celdas no deseadas
@@ -171,8 +168,9 @@ return (
                 <tr key={`${row.original.id}-details`}>
                   <td colSpan={columns.length + 1}>
                     {/* Renderizar información oculta */}
-                    <div>
-                      <p>Dirección: {row.original.Direccion}</p>
+                    <div className="text-left">
+                      <p><strong>Dirección:</strong> {row.original.Direccion}</p>
+                      <p> <strong>Observación:</strong> {row.original.Observacion}</p>
                       {/* Agrega aquí el resto de los campos ocultos */}
                     </div>
                   </td>
