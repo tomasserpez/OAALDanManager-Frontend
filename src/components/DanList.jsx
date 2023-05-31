@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { getDanes, deleteDan } from '../features/apiCalls';
-import { useTable, useGlobalFilter } from "react-table";
-import regeneratorRuntime from "regenerator-runtime";
+import { useTable, useGlobalFilter } from 'react-table';
 
-import GlobalFilter from './GlobalFilter';
+
+import { getDanes, deleteDan } from '../features/apiCalls';
+
 
 const DanList = () => {
   const [danes, setDanes] = useState([]);
+  const [globalFilter, setFilterValue] = useState('');
+  const [expandedRowId, setExpandedRowId] = useState(null);
 
   useEffect(() => {
+    // Simulación de datos obtenidos de la API
     const fetchDanes = async () => {
       const danesData = await getDanes();
       setDanes(danesData);
     };
 
     fetchDanes();
-  },[]);
+  }, []);
 
   const handleDelete = async (id) => {
     await deleteDan(id);
@@ -24,34 +27,68 @@ const DanList = () => {
     setDanes(danesData);
   };
 
-  const columns = [
+  const handleEdit = (id) => {
+    // Lógica para editar un dan por su ID
+    // ...
+    console.log(id);
+  };
+
+  const handleExpand = (id) => {
+    setExpandedRowId((prevId) => (prevId === id ? null : id));
+  };
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'ID',
+        accessor: 'id',
+      },
+      {
+        Header: 'Nombre y Apellido',
+        accessor: 'NombreApellido',
+      },
+      {
+        Header: 'DNI',
+        accessor: 'dni',
+      },
     {
-      Header: 'Nombre y Apellido',
-      accessor: 'NombreApellido',
+      Header: 'Nro Dan',
+      accessor: 'NroDan',
     },
     {
-      Header: "DNI",
-      accessor: 'dni',
+      Header: 'Nacionalidad',
+      accessor: 'Nacionalidad',
     },
     {
-      Header: "Acciones",
-      Cell: ({row}) => (
-        <>
-        <button
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => handleDelete(row.original.id)}
-        >
-        Eliminar
-        </button>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-        Editar
-        </button>
-        </>
-      )
-    }
-  ];
+      Header: 'Observación',
+      accessor: 'Observacion',
+    },
+    {
+      Header: 'Tipo de Alumno',
+      accessor: 'TipoDeAlumno',
+    },
+      {
+        Header: 'Acciones',
+        Cell: ({ row }) => (
+          <div>
+            <button
+              onClick={() => handleDelete(row.original.id)}
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2"
+            >
+              Eliminar
+            </button>
+            <button
+              onClick={() => handleEdit(row.original.id)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Editar
+            </button>
+          </div>
+        ),
+      },
+    ],
+    []
+  );
 
   const {
     getTableProps,
@@ -59,58 +96,97 @@ const DanList = () => {
     headerGroups,
     rows,
     prepareRow,
-    state,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-  } = useTable({ columns, data: danes}, useGlobalFilter);
-  const { globalFilter } = state;
+    setGlobalFilter
+  } = useTable({ columns, data: danes }, useGlobalFilter);
 
-  return(
-    <>
-      <h1> Listado de danes </h1>
-      <GlobalFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      />
-      <div className="mt-2 flex flex-col">
-        <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
-          <div  className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-      <table className="min-w-full divide-y divide-gray-200" {...getTableProps()}>
-        <thead className="bg-gray-100">
-         {headerGroups.map((headerGroup) => (
+  const handleFilterChange = (e) => {
+    setGlobalFilter(e.target.value);
+    setFilterValue(e.target.value);
+  };
+
+return (
+  <div className="overflow-x-auto">
+    <input
+      value={globalFilter}
+      onChange={handleFilterChange}
+      placeholder="Buscar dan..."
+      className="w-64 rounded-xl border p-2 mb-4"
+    />
+    <table {...getTableProps()} className="w-full">
+      <thead>
+        {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
               <th
-               {...column.getHeaderProps()}
-               className="px-6 py-5 text-left text-20 font-medium text-gray-400 uppercase rounded-sm tracking-wider"
+                {...column.getHeaderProps()}
+                className="px-4 py-2 bg-gray-100 text-center text-gray-700 font-bold"
               >
-              {column.render('Header')}
+                {column.render('Header')}
               </th>
             ))}
           </tr>
-        ))} 
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200" {...getTableBodyProps()}>
-                  {rows.map((row)=>{
-                    prepareRow(row);
-                    return(
-                    <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                      ))}
-                    </tr>
-                    );
-                  })}
-        </tbody>
-      </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row) => {
+          prepareRow(row);
+          const isExpanded = row.original.id === expandedRowId;
+          return (
+            <>
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  if (
+                    isExpanded &&
+                    ![
+                      'id',
+                      'NombreApellido',
+                      'dni',
+                      'NroDan',
+                      'Nacionalidad',
+                      'Observacion',
+                      'TipoDeAlumno',
+                    ].includes(cell.column.id)
+                  ) {
+                    return null; // Ocultar las celdas no deseadas
+                  }
+                  return (
+                    <td
+                      {...cell.getCellProps()}
+                      className="px-4 py-2 border-b border-gray-200"
+                    >
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                })}
+                <td>
+                  <button
+                    onClick={() => handleExpand(row.original.id)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    {isExpanded ? 'Ocultar' : 'Mostrar'}
+                  </button>
+                </td>
+              </tr>
+              {isExpanded && (
+                <tr key={`${row.original.id}-details`}>
+                  <td colSpan={columns.length + 1}>
+                    {/* Renderizar información oculta */}
+                    <div>
+                      <p>Dirección: {row.original.Direccion}</p>
+                      {/* Agrega aquí el resto de los campos ocultos */}
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+);
+
+  
 };
 
 export default DanList;
