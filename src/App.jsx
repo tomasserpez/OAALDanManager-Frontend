@@ -10,7 +10,10 @@ function App() {
 
   return (
     <>
-      <p>OAAL DAN MANAGER 🥋</p>
+      
+      <h1 className='font-bold'>OAAL DAN MANAGER 🥋</h1>
+      
+      <br></br>
       <div><DanList /></div>
     </>
   )

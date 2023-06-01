@@ -60,6 +60,10 @@ const DanList = () => {
       accessor: 'Nacionalidad',
     },
     {
+      Header: 'Fecha del último examen',
+      accessor: 'FechaUltimoExamen',
+    },
+    {
       Header: 'Tipo de Alumno',
       accessor: 'TipoDeAlumno',
     },
@@ -88,7 +92,7 @@ const DanList = () => {
 
   const {
     getTableProps,
-    getTableBodyProps,
+    getTableBodyProps,  
     headerGroups,
     rows,
     prepareRow,
@@ -140,6 +144,7 @@ return (
                       'NroDan',
                       'Nacionalidad',
                       'Observacion',
+                      'FechaUltimoExamen',
                       'TipoDeAlumno',
                       'Acciones',
                     ].includes(cell.column.id)
@@ -169,8 +174,11 @@ return (
                   <td colSpan={columns.length + 1}>
                     {/* Renderizar información oculta */}
                     <div className="text-left">
-                      <p><strong>Dirección:</strong> {row.original.Direccion}</p>
-                      <p> <strong>Observación:</strong> {row.original.Observacion}</p>
+                      <p><strong>Número de miembro:</strong> {row.original.NroMiembro}</p>
+                      <p><strong>Número de AF:</strong> {row.original.NroAF}</p>
+                      <p><strong>Fecha del proximo examen:</strong> {row.original.FechaProximoExamen}</p>
+                      <p><strong>Direccion:</strong> {row.original.Direccion}</p>
+                      <p><strong>Observación:</strong> {row.original.Observacion}</p>
                       {/* Agrega aquí el resto de los campos ocultos */}
                     </div>
                   </td>
