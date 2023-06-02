@@ -56,9 +56,9 @@ const DanList = () => {
       accessor: 'NroDan',
     },
     {
-      Header: 'Nacionalidad',
-      accessor: 'Nacionalidad',
-    },
+      Header: 'Dojo al que responde',
+      accessor: 'QueDojoPertenece',
+        },
     {
       Header: 'Fecha del último examen',
       accessor: 'FechaUltimoExamen',
@@ -144,6 +144,7 @@ return (
                       'NroDan',
                       'Nacionalidad',
                       'Observacion',
+                      'QueDojoPertenece',
                       'FechaUltimoExamen',
                       'TipoDeAlumno',
                       'Acciones',
@@ -175,9 +176,17 @@ return (
                     {/* Renderizar información oculta */}
                     <div className="text-left">
                       <p><strong>Número de miembro:</strong> {row.original.NroMiembro}</p>
+                      <p><strong>Nacionalidad:</strong> {row.original.Nacionalidad}</p>
+                      <p><strong>Fecha de Nacimiento:</strong> {row.original.FechaNacimiento}</p>
                       <p><strong>Número de AF:</strong> {row.original.NroAF}</p>
                       <p><strong>Fecha del proximo examen:</strong> {row.original.FechaProximoExamen}</p>
+                      <p><strong>Contacto:</strong></p>
+                      <ul className="pl-2">
+                        <li><strong>Teléfono:</strong> {row.original.Telefono}</li>
+                        <li><strong>Email:</strong> {row.original.Email}</li>
+                      </ul>
                       <p><strong>Direccion:</strong> {row.original.Direccion}</p>
+                      <p><strong>Codigo Postal:</strong> {row.original.CodigoPostal}</p>
                       <p><strong>Observación:</strong> {row.original.Observacion}</p>
                       {/* Agrega aquí el resto de los campos ocultos */}
                     </div>
