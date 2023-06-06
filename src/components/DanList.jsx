@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTable, useGlobalFilter } from 'react-table';
 
 
-import { getDanes, deleteDan } from '../features/apiCalls';
+import { getDanes, deleteDan, updateDan } from '../features/apiCalls';
 
 
 const DanList = () => {
@@ -10,6 +10,13 @@ const DanList = () => {
   const [globalFilter, setFilterValue] = useState('');
   const [expandedRowId, setExpandedRowId] = useState(null);
 
+  
+  const generateUniqueKey = (prefix) => {
+    return `${prefix}-${new Date().getTime()}`;
+  };
+  
+
+  const ArrayDanes = ["Shodan", "Nidan", "Sandan", "Yodan","Godan","Rokudan", "Nanadan", "Hachidan"];
   useEffect(() => {
     // Simulación de datos obtenidos de la API
     const fetchDanes = async () => {
@@ -32,52 +39,80 @@ const DanList = () => {
     // ...
     console.log(id);
   };
-
+  
+  const handlePromotion = (dan) => {
+    const index = ArrayDanes.indexOf(dan.NroDan);
+    if (index >= 7) {
+      alert("No se puede promocionar un dan que ya está en la posición máxima");
+    } else {
+      const updatedDan = { ...dan };
+      updatedDan.NroDan = ArrayDanes[index + 1];
+      updateDan(updatedDan.id, updatedDan)
+        .then(() => {
+          setDanes((prevDanes) => {
+            const danIndex = prevDanes.findIndex((d) => d.id === dan.id);
+            const updatedDanes = [...prevDanes];
+            updatedDanes.splice(danIndex, 1);
+            updatedDanes.splice(danIndex, 0, updatedDan);
+            return updatedDanes;
+          });
+          alert("El alumno ha sido promocionado correctamente.");
+        })
+        .catch((error) => {
+          console.log("Error al promocionar al alumno: ", error);
+          alert("Ha ocurrido un error al promocionar al alumno.");
+        });
+    }
+  };
+  
+  
   const handleExpand = (id) => {
     setExpandedRowId((prevId) => (prevId === id ? null : id));
   };
 
   const columns = React.useMemo(
     () => [
-      {
-        Header: 'ID',
-        accessor: 'id',
-      },
-      {
-        Header: 'Nombre y Apellido',
-        accessor: 'NombreApellido',
-      },
-      {
-        Header: 'DNI',
-        accessor: 'dni',
-      },
-    {
-      Header: 'Nro Dan',
-      accessor: 'NroDan',
-    },
-    {
-      Header: 'Dojo al que responde',
-      accessor: 'QueDojoPertenece',
+        {
+          Header: 'ID',
+          accessor: 'id',
         },
-    {
-      Header: 'Fecha del último examen',
-      accessor: 'FechaUltimoExamen',
-    },
-    {
-      Header: 'Tipo de Alumno',
-      accessor: 'TipoDeAlumno',
-    },
+        {
+          Header: 'Nombre y Apellido',
+          accessor: 'NombreApellido',
+        },
+        {
+          Header: 'DNI',
+          accessor: 'dni',
+        },
+      {
+        Header: 'Nro Dan',
+        accessor: 'NroDan',
+      },
+      {
+        Header: 'Dojo al que responde',
+        accessor: 'QueDojoPertenece',
+          },
+      {
+        Header: 'Fecha del último examen',
+        accessor: 'FechaUltimoExamen',
+      },
+      {
+        Header: 'Tipo de Alumno',
+        accessor: 'TipoDeAlumno',
+      },
       {
         Header: 'Acciones',
         Cell: ({ row }) => (
           <div>
             <button
               onClick={() => handleDelete(row.original.id)}
+              key={generateUniqueKey('delete')} // Generar key única
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2"
             >
               Eliminar
             </button>
             <button
+              key={generateUniqueKey('edit')} // Generar key única
               onClick={() => handleEdit(row.original.id)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
@@ -86,8 +121,22 @@ const DanList = () => {
           </div>
         ),
       },
-    ],
-    []
+      {
+        Header: 'Promocionar',
+        Cell: ({ row }) => (
+          <div>
+            <button
+              key={generateUniqueKey('promotion')} // Generar key única
+              onClick={() => handlePromotion(row.original)}
+              className="bg-green-500 hover:bg-green-700 text-white font-bold text-2xl py-2 px-4 rounded"
+              >
+                +
+              </button>
+          </div>
+        ),
+      }
+      
+    ],[]
   );
 
   const {
@@ -133,6 +182,7 @@ return (
           const isExpanded = row.original.id === expandedRowId;
           return (
             <>
+            <React.Fragment key={`${generateUniqueKey('row')}-${row.original.id}`}> {/* Asignar una key única al fragmento */}
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   if (
@@ -148,6 +198,7 @@ return (
                       'FechaUltimoExamen',
                       'TipoDeAlumno',
                       'Acciones',
+                      'Promocionar',
                     ].includes(cell.column.id)
                   ) {
                     return null; // Ocultar las celdas no deseadas
@@ -171,7 +222,7 @@ return (
                 </td>
               </tr>
               {isExpanded && (
-                <tr key={`${row.original.id}-details`}>
+                <tr key={`${generateUniqueKey('tr')}`}>
                   <td colSpan={columns.length + 1}>
                     {/* Renderizar información oculta */}
                     <div className="text-left">
@@ -192,7 +243,10 @@ return (
                     </div>
                   </td>
                 </tr>
+                
               )}
+              </React.Fragment>
+
             </>
           );
         })}
