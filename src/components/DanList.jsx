@@ -26,8 +26,7 @@ const DanList = () => {
   useEffect(() => {
     const fetchDanes = async () => {
       const danesData = await getDanes();
-      setDanes(danesData);
-      location.refresh();
+      setDanes(danesData);  
     };
 
     fetchDanes();
@@ -43,13 +42,13 @@ const DanList = () => {
       const updatedDanes = danes.filter((d) => d.id !== id);
       setDanes(updatedDanes);
       alert("El dan ha sido promocionado correctamente.");
-      location.refresh();
+      location.reload();
     }
   };
 
   const handleEdit = (id) => {
-    console.log(id);
-  };
+    window.location.href = `/actualizar/${id}`;
+  }
 
   const handlePromotion = (dan) => {
     const index = ArrayDanes.indexOf(dan.NroDan);
@@ -64,10 +63,11 @@ const DanList = () => {
           ...dan,
           NroDan: ArrayDanes[index + 1]
         };
-        updateDan(newDan);
+        updateDan(newDan.id, newDan);
         const updatedDanes = danes.map((d) => (d.id === newDan.id ? newDan : d));
         setDanes(updatedDanes);
         alert("El dan ha sido promocionado correctamente.");
+        location.reload();
       }
     }
   };

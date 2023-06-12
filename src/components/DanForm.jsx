@@ -50,21 +50,47 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
         
     return (
         <form className="w-full max-w-lg" onSubmit={handleSubmit}>
-        <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nombreApellido">
-                    Nombre y Apellido
-                </label>
-                <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="grid-nombreApellido"
-                    type="text"
-                    placeholder="Juan Perez"
-                    value={NombreApellido}
-                    onChange={(e) => setNombreApellido(e.target.value)}
-                    required
-                />
-            </div>
+
+        {/* Nombre y Apellido, NroDan */}
+        <div className="flex flex-wrap -mx-3 mb-6 justify-center">
+
+            { !initialValues.id && (
+                <>
+                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nombreApellido">
+                            Nombre y Apellido
+                        </label>
+                        <input
+                            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            id="grid-nombreApellido"
+                            type="text"
+                            placeholder="Juan Perez"
+                            value={NombreApellido}
+                            onChange={(e) => setNombreApellido(e.target.value)}
+                            required
+                        />
+                    </div>
+                </>
+            )}
+            { initialValues.id && (
+                
+                // No,bre de la persona
+                <>
+                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nombreApellido">
+                            Nombre y Apellido
+                        </label>
+                            <input
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id="grid-nombreApellido"
+                                type="text"
+                                placeholder={initialValues.NombreApellido}
+                                disabled
+                                ></input>
+                            </div>
+
+                </>
+            )}
             <div className="w-full md:w-1/2 px-3">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nroDan">
                     Nro Dan
@@ -88,21 +114,45 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                 </select>
             </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nroMiembro">
-                    Nro Miembro
-                </label>
-                <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="grid-nroMiembro"
-                    type="text"
-                    placeholder="123456"
-                    value={NroMiembro}
-                    onChange={(e) => setNroMiembro(e.target.value)}
-                    required
-                />
-            </div>
+
+
+        {/* Nro Miembro, Fecha del Último Examen  */}
+        <div className="flex flex-wrap -mx-3 mb-6 justify-center">
+
+
+            { !initialValues.id && (
+                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nroMiembro">
+                        Nro Miembro
+                    </label>
+                    <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="grid-nroMiembro"
+                        type="text"
+                        placeholder="123456"
+                        value={NroMiembro}
+                        onChange={(e) => setNroMiembro(e.target.value)}
+                        required
+                    />
+                </div>
+            )}
+            { initialValues.id && (
+                                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nroMiembro">
+                                    Nro Miembro
+                                </label>
+                                <input
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-nroMiembro"
+                                    type="text"
+                                    placeholder={initialValues.NroMiembro}
+                                    value={NroMiembro}
+                                    onChange={(e) => setNroMiembro(e.target.value)}
+                                    disabled
+                                />
+                            </div>
+            )}
+
             <div className="w-full md:w-1/2 px-3">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-fechaUltimoExamen">
                     Fecha del último examen
@@ -118,38 +168,10 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                 />
             </div>
         </div>
-        {initialValues.id && (
-            <>
-            <div className="flex flex-wrap -mx-3 mb-6">
-                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-tipoDeAlumno">
-                    Tipo de Alumno
-                </label>
-                <input
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="grid-tipoDeAlumno"
-                    type="text"
-                    placeholder="A"
-                    value={TipoDeAlumno}
-                    onChange={(e) => setTipoDeAlumno(e.target.value)}
-                />
-                </div>
-                <div className="w-full md:w-1/2 px-3">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-observacion">
-                    Observación
-                </label>
-                <textarea
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="grid-observacion"
-                placeholder="Ingrese una observación"
-                value={observacion}
-                onChange={(e) => setObservacion(e.target.value)}
-                ></textarea>
-                </div>
-            </div>
-            </>
-        )}
-        <div className="flex flex-wrap -mx-3 mb-6">
+
+
+        {/* Fecha de Nacimiento, Fecha del Préximo Examen */}
+        <div className="flex flex-wrap -mx-3 mb-6 justify-center">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-fechaProximoExamen">
                     Fecha del próximo examen
@@ -178,7 +200,10 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                 />
             </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
+
+
+        {/* Nacionalidad, Direccion */}
+        <div className="flex flex-wrap -mx-3 mb-6 justify-center">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nacionalidad">
                     Nacionalidad
@@ -207,10 +232,12 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                     required
                 />
             </div>
-
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">            
-            <div className="w-full md:w-1/2 px-3">
+
+
+        {/* Provincia, NroAF */}
+        <div className="flex flex-wrap -mx-3 mb-6md:mb-0 justify-center">            
+            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-provincia">
                 Provincia
                 </label>
@@ -238,8 +265,14 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                     required
                 />
             </div>
-            {initialValues.id && (
-            <div className="w-full md:w-1/2 px-3">
+  
+        </div>
+
+
+        {/* DNI */}
+        {!initialValues.id && (
+        <div className="flex flex-wrap -mx-3 mb-6md:mb-0 justify-center py-4">            
+            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-dni">
                 DNI
                 </label>
@@ -253,9 +286,30 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                 required
                 />
             </div>
-            )}
         </div>
-            <div className="flex flex-wrap -mx-3 mb-6">
+        )}        
+        { initialValues.id && (
+            <div className="flex flex-wrap -mx-3 mb-6md:mb-0 justify-center py-4">            
+                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-dni">
+                    DNI
+                    </label>
+                    <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-dni"
+                    type="text"
+                    placeholder={initialValues.dni}
+                    value={dni}
+                    onChange={(e) => setDni(e.target.value)}
+                    disabled
+                    />
+                </div>
+            </div>
+            )}
+
+
+        {/* Telefono, Email */}
+        <div className="flex flex-wrap -mx-3 mb-6 justify-center">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-telefono">
                 Teléfono
@@ -284,8 +338,11 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                 required
                 />
             </div>
-            </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
+        </div>
+
+
+        {/* Codigo postal, QueDojoPertenece */}
+        <div className="flex flex-wrap -mx-3 mb-6 justify-center">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-codigoPostal">
                 Código Postal
@@ -315,6 +372,51 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
             />
             </div>
         </div>
+
+
+        {/* Tipo de alumno y Observacion */}
+        {initialValues.id && (
+            <>
+            <div className="flex flex-wrap -mx-3 mb-6 justify-center">
+                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-tipoDeAlumno">
+                    Tipo de Alumno
+                </label>
+                <select
+                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-TipoDeAlumno"
+                    value={TipoDeAlumno}
+                    onChange={(e) => setTipoDeAlumno(e.target.value)}
+                    required
+                >
+                    <option value="">Seleccionar</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+                </div>
+            </div>
+            <div className="flex flex-wrap  -mx-3 mb-6 justify-center">
+
+                <div className="w-full md:w-1/2 px-3">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-observacion">
+                        Observación
+                    </label>
+                    <textarea
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-observacion"
+                    placeholder="Ingrese una observación"
+                    value={observacion}
+                    onChange={(e) => setObservacion(e.target.value)}
+                    ></textarea>
+                </div>
+            </div>
+            </>
+
+
+
+        )}
         <div className="flex justify-center">
             <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
