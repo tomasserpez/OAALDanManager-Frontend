@@ -70,11 +70,33 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                             required
                         />
                     </div>
+                    <div className="w-full md:w-1/2 px-3">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nroDan">
+                            Nro Dan
+                        </label>
+                        <select
+                            className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            id="grid-nroDan"
+                            value={NroDan}
+                            onChange={(e) => setNroDan(e.target.value)}
+                            required
+                        >
+                            <option value="">Seleccionar</option>
+                            <option value="Shodan">Shodan</option>
+                            <option value="Nidan">Nidan</option>
+                            <option value="Sandan">Sandan</option>
+                            <option value="Yodan">Yodan</option>
+                            <option value="Godan">Godan</option>
+                            <option value="Rokudan">Rokudan</option>
+                            <option value="Nanadan">Nanadan</option>
+                            <option value="Hachidan">Hachidan</option>
+                        </select>
+                    </div>
                 </>
             )}
             { initialValues.id && (
                 
-                // No,bre de la persona
+                // Nombre de la persona
                 <>
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nombreApellido">
@@ -86,33 +108,32 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                                 type="text"
                                 placeholder={initialValues.NombreApellido}
                                 disabled
-                                ></input>
-                            </div>
+                            ></input>
+                    </div>
+                    <div className="w-full md:w-1/2 px-3">
+                        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nroDan">
+                            Nro Dan
+                        </label>
+                        <select
+                            className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            id="grid-nroDan"
+                            value={initialValues.NroDan}
+                            placeholder={initialValues.NroDan}
+                            onChange={(e) => setNroDan(e.target.value)}
+                        >
+                            <option value="Shodan">Shodan</option>
+                            <option value="Nidan">Nidan</option>
+                            <option value="Sandan">Sandan</option>
+                            <option value="Yodan">Yodan</option>
+                            <option value="Godan">Godan</option>
+                            <option value="Rokudan">Rokudan</option>
+                            <option value="Nanadan">Nanadan</option>
+                            <option value="Hachidan">Hachidan</option>
+                        </select>
+                    </div>
 
                 </>
             )}
-            <div className="w-full md:w-1/2 px-3">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nroDan">
-                    Nro Dan
-                </label>
-                <select
-                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    id="grid-nroDan"
-                    value={NroDan}
-                    onChange={(e) => setNroDan(e.target.value)}
-                    required
-                >
-                    <option value="">Seleccionar</option>
-                    <option value="Shodan">Shodan</option>
-                    <option value="Nidan">Nidan</option>
-                    <option value="Sandan">Sandan</option>
-                    <option value="Yodan">Yodan</option>
-                    <option value="Godan">Godan</option>
-                    <option value="Rokudan">Rokudan</option>
-                    <option value="Nanadan">Nanadan</option>
-                    <option value="Hachidan">Hachidan</option>
-                </select>
-            </div>
         </div>
 
 
@@ -121,6 +142,7 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
 
 
             { !initialValues.id && (
+                <>
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nroMiembro">
                         Nro Miembro
@@ -135,25 +157,7 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                         required
                     />
                 </div>
-            )}
-            { initialValues.id && (
-                                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nroMiembro">
-                                    Nro Miembro
-                                </label>
-                                <input
-                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-nroMiembro"
-                                    type="text"
-                                    placeholder={initialValues.NroMiembro}
-                                    value={NroMiembro}
-                                    onChange={(e) => setNroMiembro(e.target.value)}
-                                    disabled
-                                />
-                            </div>
-            )}
-
-            <div className="w-full md:w-1/2 px-3">
+                <div className="w-full md:w-1/2 px-3">
                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-fechaUltimoExamen">
                     Fecha del último examen
                 </label>
@@ -167,6 +171,41 @@ const DanForm = ({ handleSubmitForm, initialValues }) => {
                     required
                 />
             </div>
+                </>
+            )}
+            { initialValues.id && (
+                <>                        
+                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-nroMiembro">
+                        Nro Miembro
+                    </label>
+                    <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="grid-nroMiembro"
+                        type="text"
+                        placeholder={initialValues.NroMiembro}
+                        value={NroMiembro}
+                        onChange={(e) => setNroMiembro(e.target.value)}
+                        disabled
+                    />
+                </div>
+                <div className="w-full md:w-1/2 px-3">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-fechaUltimoExamen">
+                        Fecha del último examen
+                    </label>
+                    <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="grid-fechaUltimoExamen"
+                        type="date"
+                        placeholder={initialValues.FechaUltimoExamen}
+                        value={FechaUltimoExamen}
+                        onChange={(e) => setFechaUltimoExamen(e.target.value)}
+                    />
+                </div>
+                </>
+            )}
+
+            
         </div>
 
 

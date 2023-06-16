@@ -45,22 +45,35 @@ const Update = () => {
     fetchDan();
 }, [id]);
 
-const handleSubmitForm = async (e) => {
-  e.preventDefault();
-  try{
-    const updateConfirmation = window.confirm("¿Estás seguro de que deseas actualizar el Dan?");
-    if (updateConfirmation) {
-      await updateDan(id, initialValues);
-      window.alert("Dan actualizado con éxito");
-    }else{
-      window.alert("El dan no se ha actualizado.");
+// const handleSubmitForm = async (e) => {
+//   e.preventDefault();
+//   try{
+//     const updateConfirmation = window.confirm("¿Estás seguro de que deseas actualizar el Dan?");
+//     if (updateConfirmation) {
+//       await updateDan(id, initialValues);
+//       window.alert("Dan actualizado con éxito");
+//     }else{
+//       window.alert("El dan no se ha actualizado.");
+//     }
+//   }
+//   catch(error){
+//     window.alert("Error al actualizar el Dan");
+//     console.log(err);
+//   }
+// }
+  const handleSubmitForm = async (formValues) => {
+    try{
+      const confirmUpdate = window.confirm("Está seguro que desea actualizar este dan?");
+      if(confirmUpdate){
+        await updateDan(formValues.id, formValues);
+        alert("Dan actualizado correctamente");
+      }
+    }catch(err){
+      alert("Error al actualizar el dan.");
+      console.log(err);
     }
-  }
-  catch(error){
-    window.alert("Error al actualizar el Dan");
-    console.log(err);
-  }
-}
+    location.reload();
+  };
 
   return (
     <>

@@ -4,11 +4,11 @@ const Navbar = () => {
   // Determinamos si estamos parados en CREAR/EDITAR o en Listar
   const handleRedirect = () => {
     // si estamos en /crear el boton debe decir "Volver" y redirigirnos a la pantalla de inicio
-    if (window.location.pathname === '/crear') {
-      window.location.href = '/'
+    if (window.location.pathname === '/') {
+      window.location.href = '/crear'
     }
     else{
-      window.location.href = '/crear'
+      window.location.href = '/'
     }
   }
 
@@ -24,7 +24,7 @@ const Navbar = () => {
         <div className="mt-4 lg:mt-0">
           <button className="inline-flex items-center bg-amber-500 border-0 py-2 px-4 text-white hover:bg-amber-600 focus:outline-none rounded hover:animate-pulse"
           onClick={() => handleRedirect()}>
-            {window.location.pathname === '/crear' ? 'Volver' : 'Crear'}
+            {window.location.pathname === '/' ? 'Crear' : 'Volver'}
           </button>
         </div>
       </nav>
