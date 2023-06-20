@@ -13,7 +13,7 @@ import {
   TextInput,
   Tooltip,
 } from '@mantine/core';
-import { IconTrash, IconEdit, IconPlus, IconArrowAutofitUp, IconUserPlus } from '@tabler/icons-react';
+import { IconTrash, IconEdit, IconPlus, IconArrowAutofitUp, IconUserPlus, IconInfoCircle } from '@tabler/icons-react';
 // import { data, states } from './makeData';
 
 const Example = () => {
@@ -113,14 +113,6 @@ const Example = () => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: '_id',
-        header: 'ID',
-        enableColumnOrdering: false,
-        enableEditing: false,
-        enableSorting: false,
-        size: 80,
-      },
-      {
         accessorKey: 'nombre',
         header: 'Nombre',
         size: 140,
@@ -152,6 +144,145 @@ const Example = () => {
           type: 'number',
         }),
       },
+      {
+        accessorKey: 'sexo',
+        header: 'Sexo',
+        size: 80,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'nroMiembro',
+        header: 'Nro. Miembro',
+        size: 80,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+          type: 'number',
+        }),
+      },
+      {
+        accessorKey: 'membership',
+        header: 'Membership',
+        size: 80,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+          type: 'number',
+        }),
+      },
+      {
+        accessorKey: 'nroAF',
+        header: 'Nro. AF',
+        size: 80,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+          type: 'number',
+        }),
+      },
+      {
+        accessorKey: 'fechaProximoExamen',
+        header: 'Fecha del Próximo Examen',
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'fechaNacimiento',
+        header: 'Fecha de Nacimiento',
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'nacionalidad',
+        header: 'Nacionalidad',
+        size: 120,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'dni',
+        header: 'DNI',
+        size: 100,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+          type: 'number',
+        }),
+      },
+      {
+        accessorKey: 'queDojoPertenece',
+        header: '¿A qué Dojo Pertenece?',
+        size: 180,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'pais',
+        header: 'País',
+        size: 120,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'provincia',
+        header: 'Provincia',
+        size: 120,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'direccion',
+        header: 'Dirección',
+        size: 180,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'codigoPostal',
+        header: 'Código Postal',
+        size: 120,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'telefono',
+        header: 'Teléfono',
+        size: 120,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'email',
+        header: 'Email',
+        size: 180,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+          type: 'email',
+        }),
+      },
+      {
+        accessorKey: 'tipoAlumno',
+        header: 'Tipo de Alumno',
+        size: 140,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
+      {
+        accessorKey: 'observacion',
+        header: 'Observación',
+        size: 180,
+        mantineEditTextInputProps: ({ cell }) => ({
+          ...getCommonEditTextInputProps(cell),
+        }),
+      },
     ],
     [getCommonEditTextInputProps]
   );
@@ -177,28 +308,55 @@ const Example = () => {
             size: 120,
           },
         }}
+
+        initialState={{
+          columnVisibility: {
+            sexo: false,
+            membership: false,
+            nroAF: false,
+            nroMiembro: false,
+            fechaNacimiento: false,
+            fechaProximoExamen: false,
+            nacionalidad: false,
+            provincia: false,
+            direccion: false,
+            codigoPostal: false,
+            telefono: false,
+            email: false,
+            tipoAlumno: false,
+            observacion: false
+          },
+          isFullScreen:true
+        }}
+        getSubRows={(originalRow) => originalRow.subRows}
         columns={columns}
         data={tableData}
         editingMode="modal"
         enableColumnOrdering
-        enableEditing
+        enableEditing={true}
         onEditingRowSave={handleSaveRowEdits}
         onEditingRowCancel={handleCancelRowEdits}
+        
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: 'flex', gap: '16px' }}>
             <Tooltip withArrow position="left" label="Editar">
-              <ActionIcon onClick={() => table.setEditingRow(row)}>
+              <ActionIcon onClick={() => table.setEditingModalOpen(row)}>
                 <IconEdit />
               </ActionIcon>
             </Tooltip>
             <Tooltip withArrow position="right" label="Eliminar">
-              <ActionIcon color="darkred" onClick={() => handleDeleteRow(row)}>
+              <ActionIcon color="darkred" onClick={() => handleDeleteRow(true,row)}>
                 <IconTrash />
               </ActionIcon>
             </Tooltip>
             <Tooltip withArrow position="right" label="Promocionar">
-              <ActionIcon color="darkred" onClick={() => handleDeleteRow(row)}>
+              <ActionIcon color="darkred" onClick={() => handlePromoteRow(row)}>
                 <IconPlus />
+              </ActionIcon>
+            </Tooltip>
+            <Tooltip withArrow position="right" label="Sensei">
+              <ActionIcon color="darked" onClick={() => setMasInfoModalOpen(true,row)}>
+                <IconInfoCircle />
               </ActionIcon>
             </Tooltip>
           </Box>
@@ -237,13 +395,20 @@ export const CreateNewDanModal = ({ open, columns, onClose, onSubmit }) => {
   };
 
   return (
-    <Dialog opened={open}>
+    <Dialog opened={open}
+      sx={{
+        width: '500px'
+      }}
+    >
       <Title ta="center">Agregar Nuevo Dan</Title>
       <form onSubmit={(e) => e.preventDefault()}>
         <Stack
           sx={{
             width: '100%',
-            gap: '24px',
+            display: 'grid',
+            gap: "14px",
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            
           }}
         >
           {columns.map((column) => (
@@ -262,7 +427,7 @@ export const CreateNewDanModal = ({ open, columns, onClose, onSubmit }) => {
         sx={{
           padding: '20px',
           width: '100%',
-          justifyContent: 'flex-end',
+          justifyContent: 'flex-center',
           gap: '16px',
         }}
       >
