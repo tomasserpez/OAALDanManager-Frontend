@@ -82,6 +82,30 @@ const Example = () => {
     [tableData]
   );
 
+  
+  const handlePromotion = async (row) => {
+    const index = row.original.nroDan;
+    if (index >= 7) {
+      alert("No se puede promocionar un dan que ya está en la posición máxima");
+    } else {
+      const promotionConfirm = window.confirm(
+        '¿Estás seguro de que quieres a ' + row.original.nombreApellido + ' promocionar de' + row.original.nroDan + ' a ' + (row.original.nroDan + 1) +  '?'
+      );
+      if (promotionConfirm) {
+        row.original.nroDan += 1;
+          const response = await axios.put(
+          `http://localhost:8080/danes/${row.original._id}`,
+          row.original
+        );
+        tableData[row.index] = response.data;
+        setTableData([...tableData]);
+        alert("El dan ha sido promocionado correctamente.");
+        location.reload();
+      }
+
+    }
+  };
+
   const getCommonEditTextInputProps = useCallback(
     (cell) => {
       return {
@@ -345,12 +369,12 @@ const Example = () => {
               </ActionIcon>
             </Tooltip>
             <Tooltip withArrow position="right" label="Eliminar">
-              <ActionIcon color="darkred" onClick={() => handleDeleteRow(true,row)}>
+              <ActionIcon color="darkred" onClick={() => handleDeleteRow(row)}>
                 <IconTrash />
               </ActionIcon>
             </Tooltip>
             <Tooltip withArrow position="right" label="Promocionar">
-              <ActionIcon color="darkred" onClick={() => handlePromoteRow(row)}>
+              <ActionIcon color="darkred" onClick={() => handlePromotion(row)}>
                 <IconPlus />
               </ActionIcon>
             </Tooltip>
@@ -397,7 +421,7 @@ export const CreateNewDanModal = ({ open, columns, onClose, onSubmit }) => {
   return (
     <Dialog opened={open}
       sx={{
-        width: '500px'
+        width: '600px'
       }}
     >
       <Title ta="center">Agregar Nuevo Dan</Title>
