@@ -14,6 +14,7 @@ import {
   } from '@mantine/core';
 
 import { DateInput } from '@mantine/dates';
+import { parse, format } from 'date-fns';
 
 export const CreateNewDanModal = ({ open, columns, onClose, onSubmit }) => {
     const [values, setValues] = useState(() =>
@@ -66,15 +67,13 @@ export const CreateNewDanModal = ({ open, columns, onClose, onSubmit }) => {
       };
 
       if(dateFields.includes(column.accessorKey)){
-        const fecha = new Date(values[column.accessorKey]);
-        const fechaFormateada = (fechaCruda) => { parse(fechaCruda, 'yyyy-MM-dd', new Date()); }
         
         return(
           <>
             <DateInput
               label={column.header}
               onChange={(nuevaFecha) => 
-                setValues({...values, [column.accessorKey]: nuevaFecha})
+                setValues({...values, [column.accessorKey]: format(nuevaFecha, 'yyyy-MM-dd')})
               }
               valueFormat='YYYY-MM-DD'
             />
@@ -131,7 +130,7 @@ export const CreateNewDanModal = ({ open, columns, onClose, onSubmit }) => {
         </form>
         <Flex
           sx={{
-            padding: '20px',
+            padding: '10px',
             width: '100%',
             justifyContent: 'flex-center',
             gap: '16px',

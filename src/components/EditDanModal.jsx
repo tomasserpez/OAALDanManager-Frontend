@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { parse } from 'date-fns';
+import { parse, format } from 'date-fns';
 import {
     Box,
     Button,
@@ -82,8 +82,8 @@ export const EditDanModal = ({ open, columns, selectedDan, onClose, onSubmit }) 
             <DateInput
               value={fecha}
               label={column.header}
-              onChange={(nuevaFecha) => 
-                setValues({...values, [column.accessorKey]: parse(nuevaFecha, 'yyyy-MM-dd', new Date())})
+              onChange={(fecha) => 
+                setValues({...values, [column.accessorKey]: format(fecha, 'yyyy/MM/dd')})
               }
               valueFormat='YYYY-MM-DD'
             />
@@ -160,7 +160,7 @@ export const EditDanModal = ({ open, columns, selectedDan, onClose, onSubmit }) 
             sx={{
               width: '100%',
               display: 'grid',
-              gap: "14px",
+              gap: "12px",
               gridTemplateColumns: 'repeat(3, 1fr)',
             }}
           >
@@ -171,7 +171,7 @@ export const EditDanModal = ({ open, columns, selectedDan, onClose, onSubmit }) 
         </form>
         <Flex
             sx={{
-                padding: '20px',
+                padding: '10px',
                 width: '100%',
                 justifyContent: 'flex-center',
                 gap: '16px',

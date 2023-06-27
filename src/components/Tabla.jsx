@@ -29,7 +29,7 @@ const Tabla = () => {
 
   const fetchDanes = async () => {
     try {
-      const response = await axios.get('http://192.168.0.156:8080/danes');
+      const response = await axios.get('http://localhost:8080/danes');
       setTableData(response.data);
     } catch (error) {
       console.error('Error al obtener los danes:', error);
@@ -43,7 +43,10 @@ const Tabla = () => {
   const handleCreateNewRow = async (values) => {
     try {
       delete values._id;
-      const response = await axios.post('http://192.168.0.156:8080/danes', values);
+      delete values.observacion;
+      delete values.tipoAlumno;
+      console.log(values);
+      const response = await axios.post('http://localhost:8080/danes', values);
       setTableData([...tableData, response.data]);
       alert("El dan ha sido creado correctamente.");
       setCreateModalOpen(false);
@@ -80,7 +83,7 @@ const Tabla = () => {
         return;
       }
       try {
-        await axios.delete(`http://192.168.0.156:8080/danes/${row.original._id}`);
+        await axios.delete(`http://localhost:8080/danes/${row.original._id}`);
         tableData.splice(row.index, 1);
         setTableData([...tableData]);
       } catch (error) {
@@ -102,7 +105,7 @@ const Tabla = () => {
       if (promotionConfirm) {
         row.original.nroDan += 1;
           const response = await axios.put(
-          `http://192.168.0.156:8080/danes/${row.original._id}`,
+          `http://localhost:8080/danes/${row.original._id}`,
           row.original
         );
         tableData[row.index] = response.data;
