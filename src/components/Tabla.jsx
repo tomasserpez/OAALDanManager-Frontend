@@ -18,8 +18,7 @@ import { IconTrash, IconEdit, IconPlus, IconArrowAutofitUp, IconUserPlus, IconIn
 
 import { CreateNewDanModal } from './CreateNewDanModal';
 import { EditDanModal } from './EditDanModal';
-const dotenv = require('dotenv');
-dotenv.config();
+
 
 const Tabla = () => {
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -27,11 +26,12 @@ const Tabla = () => {
   const [tableData, setTableData] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
   const [selectedDan, setSelectedDan] = useState(null);
+  
 
 
   const fetchDanes = async () => {
     try {
-      const response = await axios.get(`${process.env.BACKEND_SERVER}/danes`);
+      const response = await axios.get(`https://danmanager-backend.onrender.com/danes`);
       setTableData(response.data);
     } catch (error) {
       console.error('Error al obtener los danes:', error);
@@ -48,7 +48,7 @@ const Tabla = () => {
       delete values.observacion;
       delete values.tipoAlumno;
       console.log(values);
-      const response = await axios.post(`${process.env.BACKEND_SERVER}/danes`, values);
+      const response = await axios.post(`https://danmanager-backend.onrender.com/danes`, values);
       setTableData([...tableData, response.data]);
       alert("El dan ha sido creado correctamente.");
       setCreateModalOpen(false);
@@ -66,7 +66,7 @@ const Tabla = () => {
     try{
       console.log(values._id)
       const response = await axios.put(
-        `${process.env.BACKEND_SERVER}/danes/${values._id}`,
+        `https://danmanager-backend.onrender.com/danes/${values._id}`,
         values
       );
       alert("El dan ha sido editado correctamente.");
@@ -85,7 +85,7 @@ const Tabla = () => {
         return;
       }
       try {
-        await axios.delete(`${process.env.BACKEND_SERVER}/danes/${row.original._id}`);
+        await axios.delete(`https://danmanager-backend.onrender.com/danes/${row.original._id}`);
         tableData.splice(row.index, 1);
         setTableData([...tableData]);
       } catch (error) {
@@ -107,7 +107,7 @@ const Tabla = () => {
       if (promotionConfirm) {
         row.original.nroDan += 1;
           const response = await axios.put(
-          `${process.env.BACKEND_SERVER}/danes/${row.original._id}`,
+          `https://danmanager-backend.onrender.com/danes/${row.original._id}`,
           row.original
         );
         tableData[row.index] = response.data;
