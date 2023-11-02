@@ -22,7 +22,7 @@ const Login = () => {
             let data = {
                 "username": uname.value,
                 "password": pass.value,
-                "email": "tomasserpez@gmail.com"
+                "email": import.meta.env.VITE_EMAIL
             }
             const response = await axios.post(import.meta.env.VITE_AUTH + '/signin',
                 data
