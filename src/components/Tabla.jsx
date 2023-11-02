@@ -20,6 +20,14 @@ import { CreateNewDanModal } from './CreateNewDanModal';
 import { EditDanModal } from './EditDanModal';
 
 
+const header = {
+  headers: {
+    "x-access-token": localStorage.getItem('token'),
+    "content-type": "application/json"
+  }
+}
+
+
 const Tabla = () => {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -28,10 +36,10 @@ const Tabla = () => {
   const [selectedDan, setSelectedDan] = useState(null);
   
 
-
+  console.log(import.meta.env.VITE_BACKEND)
   const fetchDanes = async () => {
     try {
-      const response = await axios.get(process.env.BACKEND);
+      const response = await axios.get(import.meta.env.VITE_BACKEND, header);
       setTableData(response.data);
     } catch (error) {
       console.error('Error al obtener los danes:', error);
@@ -48,7 +56,7 @@ const Tabla = () => {
       delete values.observacion;
       delete values.tipoAlumno;
       console.log(values);
-      const response = await axios.post(process.env.BACKEND, values);
+      const response = await axios.post(import.meta.env.VITE_BACKEND, values, header);
       setTableData([...tableData, response.data]);
       alert("El dan ha sido creado correctamente.");
       setCreateModalOpen(false);
@@ -66,8 +74,9 @@ const Tabla = () => {
     try{
       console.log(values._id)
       const response = await axios.put(`
-        process.env.BACKEND/${values._id}`,
-        values
+        import.meta.env.VITE_BACKEND/${values._id}`,
+        values,
+        header
       );
       alert("El dan ha sido editado correctamente.");
       location.reload();
@@ -85,7 +94,7 @@ const Tabla = () => {
         return;
       }
       try {
-        await axios.delete(`process.env.BACKEND/${row.original._id}`);
+        await axios.delete(`import.meta.env.VITE_BACKEND/${row.original._id}`, header);
         tableData.splice(row.index, 1);
         setTableData([...tableData]);
       } catch (error) {
@@ -107,8 +116,8 @@ const Tabla = () => {
       if (promotionConfirm) {
         row.original.nroDan += 1;
           const response = await axios.put(`
-          process.env.BACKEND/${row.original._id}`,
-          row.original
+          import.meta.env.VITE_BACKEND/${row.original._id}`,
+          row.original, header
         );
         tableData[row.index] = response.data;
         setTableData([...tableData]);
