@@ -11,13 +11,13 @@ function App() {
   if(localStorage.getItem("token") != undefined){
       return (
           <>
-              <Tabla />
+                <Tabla />
           </>
       )
   }else{
       return (
           <>
-              <Login />
+                <Login />
           </>
       )
   }

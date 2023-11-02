@@ -180,7 +180,7 @@ export const EditDanModal = ({ open, columns, selectedDan, onClose, onSubmit }) 
         <Button onClick={onClose} variant="subtle">
           Cancelar
         </Button>
-        <Button color="teal" onClick={handleSubmit} variant="filled">
+        <Button color="teal" className="bg-teal-500" onClick={handleSubmit} variant="filled">
           Guardar Cambios
         </Button>
         </Flex>

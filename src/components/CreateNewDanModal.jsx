@@ -139,7 +139,7 @@ export const CreateNewDanModal = ({ open, columns, onClose, onSubmit }) => {
           <Button onClick={onClose} variant="subtle">
             Cancelar
           </Button>
-          <Button color="teal" onClick={handleSubmit} variant="filled">
+          <Button color="teal" className="bg-teal-500" onClick={handleSubmit} variant="filled">
             Agregar Nuevo Dan
           </Button>
         </Flex>

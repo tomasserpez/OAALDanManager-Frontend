@@ -11,7 +11,7 @@ import {
   Menu,
   Stack,
   TextInput,
-  Tooltip,
+  Tooltip, Image,
 } from '@mantine/core';
 import { IconTrash, IconEdit, IconPlus, IconArrowAutofitUp, IconUserPlus, IconInfoCircle } from '@tabler/icons-react';
 
@@ -34,9 +34,8 @@ const Tabla = () => {
   const [tableData, setTableData] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
   const [selectedDan, setSelectedDan] = useState(null);
-  
 
-  console.log(import.meta.env.VITE_BACKEND)
+
   const fetchDanes = async () => {
     try {
       const response = await axios.get(import.meta.env.VITE_BACKEND, header);
@@ -49,6 +48,16 @@ const Tabla = () => {
   useEffect(() => {
     fetchDanes();
   }, []);
+  const handleLogout = () => {
+    if(
+        !window.confirm(`¿Estás seguro de que quieres cerrar sesion?`)
+    ){
+      return;
+    }else{
+      localStorage.removeItem("token");
+      location.reload();
+    }
+  }
 
   const handleCreateNewRow = async (values) => {
     try {
@@ -355,6 +364,7 @@ const Tabla = () => {
   
   return (
     <>
+
       <MantineReactTable
         displayColumnDefOptions={{
           'mrt-row-actions': {
@@ -417,13 +427,34 @@ const Tabla = () => {
           </Box>
         )}
         renderTopToolbarCustomActions={() => (
-          <Button
-            color="teal"
-            onClick={() => setCreateModalOpen(true)}
-            variant="filled"
-          >
-            Agregar Nuevo Dan
-          </Button>
+          <>
+            <Button
+              color="teal"
+              onClick={() => setCreateModalOpen(true)}
+              variant="filled"
+              className="bg-teal-500"
+            >
+              Agregar Nuevo Dan
+            </Button>
+
+            <img
+              src="https://aikidoargentina.org/wp-content/uploads/2022/08/logo_160x160-C.png"
+              className="w-24"
+
+              />
+          </>
+        )}
+
+        renderBottomToolbarCustomActions={()=>(
+
+            <Button
+                color="red"
+                onClick={handleLogout}
+                variant="filled"
+                className="bg-red-800 "
+            >
+              Cerrar Sesion
+            </Button>
         )}
       />
       <CreateNewDanModal
@@ -441,6 +472,7 @@ const Tabla = () => {
         selectedDan={selectedDan}
         setSelectedDan={setSelectedDan}
       />
+
     </>
   );
 };
