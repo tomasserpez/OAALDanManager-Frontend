@@ -4,14 +4,8 @@ import { MantineReactTable } from 'mantine-react-table';
 import {
   Box,
   Button,
-  Dialog,
-  Flex,
-  Title,
   ActionIcon,
-  Menu,
-  Stack,
-  TextInput,
-  Tooltip, Image,
+  Tooltip,
 } from '@mantine/core';
 import { IconTrash, IconEdit, IconPlus, IconArrowAutofitUp, IconUserPlus, IconInfoCircle } from '@tabler/icons-react';
 

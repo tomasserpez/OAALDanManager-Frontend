@@ -7,7 +7,6 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = useState({});
 
 
-    const [pwd, setPwd] = useState([])
 
 
     const renderErrorMessage = (name) =>
